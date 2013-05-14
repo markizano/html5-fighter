@@ -3,7 +3,29 @@
     <head>
         <title>Tekken Basic</title>
         <link rel='stylesheet' type='text/css' href='style.css' />
-        <script defer='defer' type='text/javascript' src='tekken.js'></script>
+        <script defer='defer' type='text/javascript' src='js/main.js'></script>
+        <style type="text/css">
+/** BEGIN: CSS RESET **/
+@charset "utf-8";
+*{margin:0;padding:0}
+iframe,a img,fieldset,form,table{border:0}
+h6,h5,h4,h3,h2,h1,caption,th,td{font-size:100%;font-weight:normal}
+dd,dt,dl,ol,ul{list-style:none}
+legend{color:#000}
+button,select,textarea,input{font-size:100%}
+table{border-collapse:collapse}
+caption,th,td{text-align:left}
+/** END: CSS RESET **/
+
+body{ font-family: sans,arial,sans-serif; font-size:100%; font-size: 14px; font-weight: normal; text-align:center; margin:0 auto; padding: 0 auto; }
+canvas{ border: solid 1px #ccc; padding: 5px; width:800px; height:600px; }
+h1{ font-weight: bold; font-size:200%; text-deocration: underline; }
+h2{ font-weight: bold; font-size:180%; }
+h3{ font-weight: bold; font-size:150%; }
+
+#page{ margin:0 auto; width:1024px; height:768px; text-align:left; }
+#debug{ float:right; width:150px; height: 24px; border: 2px solid red; }
+        </style>
     </head>
     <body>
         <div id='page'>
@@ -16,8 +38,10 @@
                     new lands never explored before :D
                 </p>
             </div>
+            <div id="debug"></div>
+            <br clear="all" />
             <div id='content'>
-                <canvas width='0' height='0' id='canvas'>
+                <canvas id='canvas'>
                     Your browser doesn't support the canvas tag. Try <a href="http://chrome.google.com/">Google Chrome</a>.
                 </canvas>
             </div>

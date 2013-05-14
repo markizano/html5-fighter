@@ -6,3 +6,5 @@ I've separated this out into a few different things:
 	- Player: Actions and events that take place when we detect the user is interacting with the character.
 	- Collision Control: When objects and characters collide, there needs to be a service to monitor this.
 	- Object: Rocks, trees and other healthy things to include in an environment. How interaction with these things should behave.
+
+
