@@ -12,16 +12,7 @@ var Player = function ( top_label ) {
         MOVING: "MOVING"
     };
 
-    self = new Image( );
-    self.imageReady = false;
-
-    self.onload = function () {
-        self.imageReady = true;
-    };
-
-    self.src = "assets/player.png";
-
-    self.expand({
+    self = {
         /* In-Game Variables */
         label: top_label,      // The text rendered at the top of the screen above the character's life bar.
         action: "IDLE", // Indicates current action.
@@ -35,10 +26,12 @@ var Player = function ( top_label ) {
         critical: 1,    // 0-100% chance at critical hits.
 
         /* Visual/Graphical Variables */
-        x: 0,
-        y: 0,
-        width: 50,
-        height: 80,
+        x: -330,
+        y: 45,
+        width: 46,
+        height: 79,
+        image: new Image( ),
+        imageReady: false,
 
         /* Object Methods */
         alive: function ( ) {
@@ -49,6 +42,7 @@ var Player = function ( top_label ) {
             parent: self,
             left: function ( delta ) {
                 var accel_advance = 0.1;
+
                 // Are we already moving or sitting still?
                 if ( this.parent.action !== actions.IDLE || this.parent.action !== actions.MOVING ) {
                     // If not, don't process this button here.
@@ -60,7 +54,7 @@ var Player = function ( top_label ) {
                     return false;
                 }
 
-                delta = delta * accel_advance;
+                delta += delta * accel_advance;
                 (accel_advance < 1) && accel_advance += 0.1;
                 this.x = this.x - ( delta * this.speed );
             },
@@ -77,7 +71,12 @@ var Player = function ( top_label ) {
                 this.y = this.y - ( delta * this.speed );
             }
         }
-    });
+    };
+
+    self.image.onload = function () {
+        self.imageReady = true;
+    };
+    self.image.src = "assets/player.png";
 
     return self;
 };

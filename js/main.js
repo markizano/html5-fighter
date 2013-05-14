@@ -33,16 +33,17 @@ while ( script = scripts.pop() ) {
 
 main = (function ( FPS ) {
     var self = {
-        p1: null,
         plane: null,
+        is_test: false
     };
 
-    self.init = function ( ) {
-        self.plane = new Canvas( document.getElementById('canvas') );
+    self.start = function ( ) {
+        self.plane = new Canvas( );
         self.plane.player = new Player( );
         self.debug = new Debug( );
 
         self.interval = setInterval(self.update, FPS);
+        document.getElementById('content').appendChild(self.plane);
         return self;
     };
 
@@ -57,10 +58,23 @@ main = (function ( FPS ) {
             return false;
         }
 
-        self.plane.update( delta );
-        self.plane.render();
-        then = now;
+        if ( !self.plane.update( delta ) ) {
+            self.stop();
+            console.error("Update fail.");
+            return false;
+        }
 
+        if ( !self.plane.render() ) {
+            self.stop();
+            console.error("Render fail.");
+            return false;
+        }
+
+        if ( self.plane.player.imageReady && self.is_test ) {
+            setInterval(self.stop, FPS);
+        }
+
+        then = now;
         return self;
     };
 
@@ -69,8 +83,12 @@ main = (function ( FPS ) {
         clearInterval(self.interval);
     };
 
+    self.test = function () {
+        self.is_test = true;
+        self.start();
+        //setInterval(self.stop, 1000);
+    };
+
     return self;
 })( FPS = 25, then );
-
-document.onload = function () { return main.init(); };
 
