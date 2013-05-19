@@ -42,14 +42,6 @@ var Canvas = function ( canvas ) {
         self.clear();
 
         if ( this.player.imageReady) {
-            console.log({
-                i: this.player.image,
-                x: this.player.x,
-                y: this.player.y,
-                w: this.player.width,
-                h: this.player.height
-            });
-
             with (this.player)
                 this.context.drawImage(image, x, y, width, height);
         }
@@ -68,16 +60,39 @@ var Canvas = function ( canvas ) {
         return true;
     };
 
-    self.move = function ( key, delta ) {
-        self.player.move[key](delta);
+    self.move = function ( dir, delta ) {
+        if ( dir === "up" ) {
+            if ( self.player.y <= -( self.height /2 ) +64 ) {
+                return true; // Movement ok, but we're at bounds.
+            }
+        } else if ( dir === "down" ) {
+            if ( self.player.y >= (self.height /2) -64 ) {
+                return true;
+            }
+        } else if ( dir === "left" ) {
+            if ( self.player.x <= -( self.width /2 ) +64 ) {
+                return true;
+            }
+        } else if ( dir === "right" ) {
+            if ( self.player.x >= ( self.width /2 ) -64) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+
+        return self.player.move[dir](delta);
     };
 
     self.keyDownEvent = function (e) {
         self.keysDown[e.keyCode] = true;
+        return false;
     };
 
     self.keyUpEvent = function (e) {
         delete this.keysDown[e.keyCode];
+        this.player.move.accel_advance = 0.1;
+        return false;
     };
 
     self.clear = function () {

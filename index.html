@@ -29,8 +29,7 @@ h3{ font-weight: bold; font-size:150%; }
 #debug{ float:right; width:150px; height: 24px; border: 2px solid red; }
         </style>
     </head>
-    <body>
-    <!--body onload="main.start();"-->
+    <body onload="main.start();">
         <div id='page'>
             <div id='heading'>
                 <h1>Markizano.NET | Ultimate Fighter Demo</h1>
@@ -43,6 +42,8 @@ h3{ font-weight: bold; font-size:150%; }
             </div>
             <div id="debug"></div>
             <br clear="all" />
+            <input type="button" value="Start Engine" onclick="main.start();" />
+            <input type="button" value="Stop Engine" onclick="main.stop();" />
             <div id='content'></div>
         </div>
     </body>

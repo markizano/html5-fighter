@@ -15,13 +15,15 @@ Object.prototype.expand = function (data) {
 /* Include our scripts from the server. */
 
 var scripts, script, s, then, main,
-    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT;
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT,
+    FPS;
 then = (new Date()).microtime();
 
 KEY_UP = 38;
 KEY_DOWN = 40;
 KEY_LEFT = 37;
 KEY_RIGHT = 39;
+FPS = 10;
 
 scripts = ['js/debug.js', 'js/player.js', 'js/canvas.js'];
 while ( script = scripts.pop() ) {
@@ -34,17 +36,26 @@ while ( script = scripts.pop() ) {
 main = (function ( FPS ) {
     var self = {
         plane: null,
-        is_test: false
+        is_test: false,
+        use: {
+            delta: true,
+            accel: false
+        }
     };
 
     self.start = function ( ) {
-        self.plane = new Canvas( );
-        self.plane.player = new Player( );
-        self.debug = new Debug( );
+        var c;
+        this.plane = new Canvas( );
+        this.plane.player = new Player( );
+        this.debug = new Debug( );
 
-        self.interval = setInterval(self.update, FPS);
-        document.getElementById('content').appendChild(self.plane);
-        return self;
+        this.interval = setInterval(this.update, FPS);
+        if ( ( c = document.getElementById('canvas') ) == null ) {
+            document.getElementById('content').appendChild(this.plane);
+        }
+
+        this.plane.focus();
+        return this;
     };
 
     self.update = function () {
@@ -79,8 +90,9 @@ main = (function ( FPS ) {
     };
 
     self.stop = function () {
-        debug.text("FPS: 0/off");
+        this.debug.text("FPS: 0/off");
         clearInterval(self.interval);
+        return true;
     };
 
     self.test = function () {
@@ -90,5 +102,5 @@ main = (function ( FPS ) {
     };
 
     return self;
-})( FPS = 25, then );
+})( FPS, then );
 
