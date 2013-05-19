@@ -1,5 +1,5 @@
 
-var Canvas = function ( canvas ) {
+var Canvas = function ( ) {
     var self = document.createElement('canvas');
 
     self.setAttribute('id', 'canvas');
@@ -21,8 +21,10 @@ var Canvas = function ( canvas ) {
 
     self.keysDown = [];
 
-    self.addEventListener('keydown', self.keyDownEvent, false);
-    self.addEventListener('keyup', self.keyUpEvent, false);
+    //self.addEventListener('keydown', self.keyDownEvent, false);
+    //self.addEventListener('keyup', self.keyUpEvent, false);
+    //window.addEventListener('keydown', self.keyDownEvent, false);
+    //window.addEventListener('keyup', self.keyUpEvent, false);
 
     self.player = {};
     self.enemies = [];
@@ -53,6 +55,7 @@ var Canvas = function ( canvas ) {
         var keys = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT];
         while ( key = keys.shift() ) {
             if ( key in self.keysDown ) {
+                console.log('Trigger movement.');
                 self.move( keyTranslate(key), delta );
             }
         }
@@ -90,8 +93,8 @@ var Canvas = function ( canvas ) {
     };
 
     self.keyUpEvent = function (e) {
-        delete this.keysDown[e.keyCode];
-        this.player.move.accel_advance = 0.1;
+        delete self.keysDown[e.keyCode];
+        self.player.move.accel_advance = 0.1;
         return false;
     };
 

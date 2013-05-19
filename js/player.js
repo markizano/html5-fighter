@@ -51,56 +51,49 @@ var Player = function ( top_label ) {
         },
 
         move: {
-            parent: self,
             accel_advance: 0.1,
             left: function ( delta ) {
-                // Are we already moving or sitting still?
-                if ( this.parent.action !== actions.IDLE || this.parent.action !== actions.MOVING ) {
-                    // If not, don't process this button here.
+                if ( self.action !== actions.IDLE && self.action !== actions.MOVING ) {
                     return false;
                 }
 
-                this.x -= calcTraverse(delta, this.accel_advance, this.parent.speed);
-                (this.accel_advance < 1) && this.accel_advance += 0.1;
+                this.x -= calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
 
                 return true;
             },
 
             right: function ( delta ) {
-                // Are we already moving or sitting still?
-                if ( this.parent.action !== actions.IDLE || this.parent.action !== actions.MOVING ) {
-                    // If not, don't process this button here.
+                if ( self.action !== actions.IDLE && self.action !== actions.MOVING ) {
                     return false;
                 }
 
 
-                this.x += calcTraverse(delta, this.accel_advance, this.parent.speed);
-                (this.accel_advance < 1) && this.accel_advance += 0.1;
+                this.x += calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
 
                 return true;
             },
 
             up: function ( delta ) {
-                // Are we already moving or sitting still?
-                if ( this.parent.action !== actions.IDLE || this.parent.action !== actions.MOVING ) {
-                    // If not, don't process this button here.
+                if ( self.action !== actions.IDLE && self.action !== actions.MOVING ) {
                     return false;
                 }
 
-                this.y -= calcTraverse(delta, this.accel_advance, this.parent.speed);
-                (this.accel_advance < 1) && this.accel_advance += 0.1;
+                this.y -= calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
+
                 return true;
             },
 
             down: function ( delta ) {
-                // Are we already moving or sitting still?
-                if ( this.parent.action !== actions.IDLE || this.parent.action !== actions.MOVING ) {
-                    // If not, don't process this button here.
+                if ( self.action !== actions.IDLE && self.action !== actions.MOVING ) {
                     return false;
                 }
 
-                this.y += calcTraverse(delta, this.accel_advance, this.parent.speed);
-                (this.accel_advance < 1) && this.accel_advance += 0.1;
+                this.y += calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
+
                 return true;
             }
         }

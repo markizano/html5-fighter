@@ -45,17 +45,20 @@ main = (function ( FPS ) {
 
     self.start = function ( ) {
         var c;
-        this.plane = new Canvas( );
-        this.plane.player = new Player( );
-        this.debug = new Debug( );
+        self.plane = new Canvas( );
+        self.plane.player = new Player( );
+        self.debug = new Debug( );
 
-        this.interval = setInterval(this.update, FPS);
+        window.addEventListener('keydown', self.plane.keyDownEvent, false);
+        window.addEventListener('keyup', self.plane.keyUpEvent, false);
+
+        self.interval = setInterval(self.update, FPS);
         if ( ( c = document.getElementById('canvas') ) == null ) {
-            document.getElementById('content').appendChild(this.plane);
+            document.getElementById('content').appendChild(self.plane);
         }
 
-        this.plane.focus();
-        return this;
+        self.plane.focus();
+        return self;
     };
 
     self.update = function () {
@@ -92,6 +95,8 @@ main = (function ( FPS ) {
     self.stop = function () {
         this.debug.text("FPS: 0/off");
         clearInterval(self.interval);
+        window.removeEventListener('keydown', self.plane.keyDownEvent, false);
+        window.removeEventListener('keyup', self.plane.keyUpEvent, false);
         return true;
     };
 
