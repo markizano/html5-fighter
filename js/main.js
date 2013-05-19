@@ -39,7 +39,7 @@ main = (function ( FPS ) {
         is_test: false,
         use: {
             delta: true,
-            accel: false
+            accel: true
         }
     };
 
@@ -65,7 +65,9 @@ main = (function ( FPS ) {
         var now = (new Date).microtime(), delta;
         delta = now - then;
 
-        self.debug.text("FPS: " + delta.toFixed(5) + 's');
+        //self.debug.text("FPS: " + delta.toFixed(5) + 's');
+        self.debug.stats();
+
         if ( typeof self.plane === "undefined" ) {
             self.stop();
             console.error("Undefined plane.");
@@ -85,7 +87,7 @@ main = (function ( FPS ) {
         }
 
         if ( self.plane.player.imageReady && self.is_test ) {
-            setInterval(self.stop, FPS);
+            setTimeout(self.stop, FPS);
         }
 
         then = now;

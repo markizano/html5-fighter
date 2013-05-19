@@ -9,13 +9,15 @@ var Debug = function ( ) {
     };
 
     self.stats = function ( ) {
-        this.style.height = ( self.debug.length * 12 ) + "px";
+        var html = [];
         this.innerHTML = "";
         for ( var key in self.debug ) {
-            if ( !typeof key === "string" ) continue;
-            this.innerHTML += key + ": " + self.debug[key];
+            if ( typeof self.debug[key] === "function" ) continue;
+            html.push(key + ": " + self.debug[key]);
         }
 
+        this.style.height = ( html.length * 16 ) + "px";
+        this.innerHTML = html.join("<br />\n");
         return this;
     }
 

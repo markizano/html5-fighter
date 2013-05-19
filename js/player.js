@@ -10,7 +10,7 @@ var Player = function ( top_label ) {
         if ( main.use.accel ) {
             traverse += accel_advance * speed;
         } else {
-            traverse += this.speed;
+            traverse += speed;
         }
         return traverse;
     }
@@ -30,8 +30,8 @@ var Player = function ( top_label ) {
         action: "IDLE", // Indicates current action.
         strength: 1,    // How powerful are hits against opponents
         defense: 1,     // How well do we protect ourselves when taking hits.
-        speed: 1,       // Quickly, are the movements.
-        accel: 0,       // 0-1; Placeholder for the amount of accelleration we have.
+        speed: 2,       // Fastest speed we will achieve.
+        accel: 0.05,   // 0-1; How quick will the character reach its max speed.
         hp: 100,        // Base life amount.
         mp: 10,         // Magic/alternate attack gage.
         fatigue: 0,     // 0-100$% scale of fatigue.
@@ -51,14 +51,14 @@ var Player = function ( top_label ) {
         },
 
         move: {
-            accel_advance: 0.1,
+            accel_advance: 0,
             left: function ( delta ) {
                 if ( self.action !== actions.IDLE && self.action !== actions.MOVING ) {
                     return false;
                 }
 
-                this.x -= calcTraverse(delta, this.accel_advance, self.speed);
-                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
+                self.x -= calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += self.accel );
 
                 return true;
             },
@@ -69,8 +69,8 @@ var Player = function ( top_label ) {
                 }
 
 
-                this.x += calcTraverse(delta, this.accel_advance, self.speed);
-                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
+                self.x += calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += self.accel );
 
                 return true;
             },
@@ -80,8 +80,8 @@ var Player = function ( top_label ) {
                     return false;
                 }
 
-                this.y -= calcTraverse(delta, this.accel_advance, self.speed);
-                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
+                self.y -= calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += self.accel );
 
                 return true;
             },
@@ -91,8 +91,8 @@ var Player = function ( top_label ) {
                     return false;
                 }
 
-                this.y += calcTraverse(delta, this.accel_advance, self.speed);
-                (this.accel_advance < 1) && ( this.accel_advance += 0.1 );
+                self.y += calcTraverse(delta, this.accel_advance, self.speed);
+                (this.accel_advance < 1) && ( this.accel_advance += self.accel );
 
                 return true;
             }

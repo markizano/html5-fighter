@@ -21,11 +21,6 @@ var Canvas = function ( ) {
 
     self.keysDown = [];
 
-    //self.addEventListener('keydown', self.keyDownEvent, false);
-    //self.addEventListener('keyup', self.keyUpEvent, false);
-    //window.addEventListener('keydown', self.keyDownEvent, false);
-    //window.addEventListener('keyup', self.keyUpEvent, false);
-
     self.player = {};
     self.enemies = [];
     self.objects = [];
@@ -55,29 +50,33 @@ var Canvas = function ( ) {
         var keys = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT];
         while ( key = keys.shift() ) {
             if ( key in self.keysDown ) {
-                console.log('Trigger movement.');
                 self.move( keyTranslate(key), delta );
             }
         }
+
+        main.debug.debug["delta"] = delta.toFixed(8);
+        main.debug.debug["player.x"] = self.player.x.toFixed(4);
+        main.debug.debug["player.y"] = self.player.y.toFixed(4);
+        main.debug.debug["accel"] = self.player.move.accel_advance.toFixed(4);
 
         return true;
     };
 
     self.move = function ( dir, delta ) {
         if ( dir === "up" ) {
-            if ( self.player.y <= -( self.height /2 ) +64 ) {
+            if ( self.player.y <= -( self.height /2 ) ) {
                 return true; // Movement ok, but we're at bounds.
             }
         } else if ( dir === "down" ) {
-            if ( self.player.y >= (self.height /2) -64 ) {
+            if ( self.player.y >= (self.height /2) -self.player.height ) {
                 return true;
             }
         } else if ( dir === "left" ) {
-            if ( self.player.x <= -( self.width /2 ) +64 ) {
+            if ( self.player.x <= -( self.width /2 ) ) {
                 return true;
             }
         } else if ( dir === "right" ) {
-            if ( self.player.x >= ( self.width /2 ) -64) {
+            if ( self.player.x >= ( self.width /2 ) - self.player.width ) {
                 return true;
             }
         } else {
@@ -94,7 +93,7 @@ var Canvas = function ( ) {
 
     self.keyUpEvent = function (e) {
         delete self.keysDown[e.keyCode];
-        self.player.move.accel_advance = 0.1;
+        self.player.move.accel_advance = 0;
         return false;
     };
 
